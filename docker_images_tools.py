@@ -30,15 +30,16 @@ target_repo = "registry.msk.cht/tdm/"
 source_registry_content = []
 target_registry_content = []
 
-for i in f:
-    source_registry_content.append(i.strip('\n'))
-print(source_registry_content)
-
 class Images:
 
     def __init__(self, source_content, target_content):
         self.source_content = source_content
         self.target_content = target_content
+
+    def build_source_content(self):
+        for i in f:
+            self.source_content.append(i.strip('\n'))
+        print(self.source_content)
 
     def pull_images(self):
         for i in self.source_content:
@@ -61,10 +62,11 @@ class Images:
         print("Images were saved.")
         return images_list
 
-# Class declaration:
+# Object declaration:
 docker_object = Images(source_registry_content, target_registry_content)
 
 # Class methods:
+docker_object.build_source_content()
 docker_object.pull_images()
 docker_object.tag_images()
 docker_object.save_docker_images()
