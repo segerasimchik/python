@@ -19,9 +19,9 @@ else:
 
 # Customize here:
 
-f = open("file", "r")
+f = open("file", "r") # Filename with images list (need to be in current dir). Replace "file" with your filename
 
-tar_name = "default"
+tar_name = input("Enter result archive name (without .tar): ")
 source_repo = "harbor.altezza.org/frisbee/"
 target_repo = "registry.msk.cht/tdm/"
 
@@ -48,8 +48,9 @@ class Images:
     def tag_images(self):
         for i in self.source_content:
             self.target_content.append(i.replace(f'{source_repo}', f'{target_repo}'))
-            for j in self.target_content:
-                os.system(f"docker tag {i} {j}")
+        for i in range(len(self.source_content)):
+            print(f"{self.source_content[i]} {self.target_content[i]}")
+            os.system(f"docker tag {self.source_content[i]} {self.target_content[i]}")
         print("Images were tagged.")
         return self.target_content
 
