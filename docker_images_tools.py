@@ -27,8 +27,8 @@ is_file_exists()
 f = open(f"{filename}", "r") # Filename with images list (need to be in current dir). Replace "file" with your filename
 
 tar_name = input("Enter result archive name (without .tar): ")
-source_repo = input("Spicify source registry with project (for exmpl 'harbor.altezza.org/frisbee'): ")
-target_repo = input("Spicify source registry with project (for exmpl 'registry.msk.cht/tdm'): ")
+source_repo = input("Specify source registry with project (for exmpl 'harbor.altezza.org/frisbee'): ")
+target_repo = input("Specify source registry with project (for exmpl 'registry.msk.cht/tdm'): ")
 
 # End of customize field
 
