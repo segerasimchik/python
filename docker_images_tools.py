@@ -20,13 +20,16 @@ def is_file_exists():
 # End of error handlers
 
 is_docker_exists()
+result = input("Do you want to save or push images [(S/s)save/(P/p)push] ? ")
+
+if result == "s":
+    tar_name = input("Enter result archive name (without .tar): ")
+
 filename = input("Please provide filename with docker images list: ")
 is_file_exists()
-
 # Customize field:
 f = open(f"{filename}", "r") # Filename with images list (need to be in current dir). Replace "file" with your filename
 
-tar_name = input("Enter result archive name (without .tar): ")
 source_repo = input("Specify source registry with project (for exmpl 'harbor.altezza.org/frisbee'): ")
 target_repo = input("Specify source registry with project (for exmpl 'registry.msk.cht/tdm'): ")
 
@@ -70,6 +73,13 @@ class Images:
         os.system(f"docker save {images_list} > {tar_name}.tar")
         print("Images were saved. Please check it.")
         return images_list
+    
+    def push_images(self):
+        for i in self.target_content:
+            print(i)
+            os.system(f"docker push {i}")
+        print("Images were pulled. Please check it.")
+        return True
 
 # Object declaration:
 docker_object = Images(source_registry_content, target_registry_content)
@@ -78,5 +88,8 @@ docker_object = Images(source_registry_content, target_registry_content)
 docker_object.build_source_content()
 docker_object.pull_images()
 docker_object.tag_images()
-docker_object.save_docker_images()
+if result == "p":
+    docker_object.push_images()
+else:
+    docker_object.save_docker_images()
 
