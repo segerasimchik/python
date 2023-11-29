@@ -20,7 +20,7 @@ def is_file_exists():
 # End of error handlers
 
 is_docker_exists()
-result = input("Do you want to save or push images [(S/s)save/(P/p)push] ? ")
+result = input("Do you want to save or push images [(S/s)save/(P/p)push] ? ").lower()
 
 if result == "s":
     tar_name = input("Enter result archive name (without .tar): ")
@@ -76,7 +76,6 @@ class Images:
     
     def push_images(self):
         for i in self.target_content:
-            print(i)
             os.system(f"docker push {i}")
         print("Images were pulled. Please check it.")
         return True
@@ -88,6 +87,7 @@ docker_object = Images(source_registry_content, target_registry_content)
 docker_object.build_source_content()
 docker_object.pull_images()
 docker_object.tag_images()
+
 if result == "p":
     docker_object.push_images()
 else:
