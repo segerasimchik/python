@@ -26,7 +26,7 @@ allowed_values = ["s", "save", "p", "push"]
 while True:
     result = input("Do you want to save or push images [(S/s)save/(P/p)push]? ").lower()
     if result not in allowed_values:
-        print("Only (S/s)save or (P/p)push allowed as valid choices. Please try again")
+        print("Only (S/s)save or (P/p)push allowed as valid choices. Please try again.")
     else:
         break
 
@@ -83,7 +83,7 @@ class Images:
     def push_images(self):
         for i in self.target_content:
             os.system(f"docker push {i}")
-        print("Images were pulled. Please check it.")
+        print("Images were pushed. Please check it.")
         return True
 
 # Object declaration:
@@ -99,3 +99,4 @@ if result == "p" or result == "push":
 else:
     docker_object.save_docker_images()
 
+print("All the work is done. Congrats!")
