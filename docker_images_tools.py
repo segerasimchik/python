@@ -10,13 +10,8 @@ def is_docker_exists():
         print("Docker is not available. Please install Docker to continue")
         return exit(1)
 
-def is_file_exists():
-    try:
-        open(f"{filename}", "r")
-        return True
-    except OSError:
-        print("File not found")
-        return exit(1)
+def is_file_exists(file):
+    return os.path.isfile(file)
 # End of error handlers
 
 is_docker_exists()
@@ -33,25 +28,26 @@ while True:
 if result == "s" or result == "save":
     tar_name = input("Enter result archive name (without .tar): ")
 
-filename = input("Please provide filename with docker images list: ")
-is_file_exists()
+file = input("Please provide file with docker images list: ")
 
-f = open(f"{filename}", "r")
+if not is_file_exists(file):
+    print(f"===\nTarget file was not found.\n===")
+    exit(1)
+
+images_list = open(f"{file}", "r")
 
 source_repo = input("Specify source registry with project (for exmpl 'harbor.altezza.org/frisbee'): ")
 target_repo = input("Specify source registry with project (for exmpl 'registry.msk.cht/tdm'): ")
 
-source_registry_content = []
-target_registry_content = []
-
 class Images:
 
-    def __init__(self, source_content, target_content):
-        self.source_content = source_content
-        self.target_content = target_content
+    def __init__(self, images):
+        self.source_content = []
+        self.target_content = []
+        self.images = images
 
     def build_source_content(self):
-        for i in f:
+        for i in self.images:
             self.source_content.append(i.strip('\n'))
         print(self.source_content)
 
@@ -64,9 +60,9 @@ class Images:
         for i in self.source_content:
             self.target_content.append(i.replace(f'{source_repo}', f'{target_repo}'))
         print(self.target_content)
-        if click.confirm(f"Are you agree with the result?", default=True):
+        if click.confirm(f"Are you agree with the result?", default=False):
             for i in range(len(self.source_content)):
-                print(f"{self.source_content[i]} {self.target_content[i]}")
+                print(f"{self.source_content[i]} --> {self.target_content[i]}")
                 os.system(f"docker tag {self.source_content[i]} {self.target_content[i]}")
             print("Images were tagged.")
         else:
@@ -87,7 +83,7 @@ class Images:
         return True
 
 # Object declaration:
-docker_object = Images(source_registry_content, target_registry_content)
+docker_object = Images(images_list)
 
 # Class methods:
 docker_object.build_source_content()
