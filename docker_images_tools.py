@@ -7,11 +7,15 @@ def is_docker_exists():
         subprocess.run(["docker", "--version"], check=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         return True
     except subprocess.CalledProcessError:
-        print("Docker is not available. Please install Docker to continue")
+        print(f"=\nDocker is not available. Please install Docker to continue.\n=")
         return exit(1)
 
-def is_file_exists(file):
-    return os.path.isfile(file)
+def is_file_exists(local_file):
+    if not os.path.isfile(local_file):
+        print(f"=\nTarget file was not found.\n=")
+        exit(1)
+    else:
+        return True
 # End of error handlers
 
 is_docker_exists()
@@ -30,9 +34,7 @@ if result == "s" or result == "save":
 
 file = input("Please provide file with docker images list: ")
 
-if not is_file_exists(file):
-    print(f"===\nTarget file was not found.\n===")
-    exit(1)
+is_file_exists(file)
 
 images_list = open(f"{file}", "r")
 
