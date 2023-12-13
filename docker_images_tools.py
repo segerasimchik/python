@@ -20,7 +20,7 @@ def is_file_exists(local_file):
 
 is_docker_exists()
 
-allowed_values = ["s", "save", "p", "push"]
+allowed_values = ("s", "save", "p", "push")
 
 while True:
     result = input("Do you want to save or push images [(S/s)save/(P/p)push]? ").lower()
