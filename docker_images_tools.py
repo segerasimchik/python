@@ -22,12 +22,16 @@ is_docker_exists()
 
 allowed_values = ("s", "save", "p", "push")
 
-while True:
+def user_answer(allowed_arr):
+    global result
     result = input("Do you want to save or push images [(S/s)save/(P/p)push]? ").lower()
-    if result not in allowed_values:
+    if result not in allowed_arr:
         print("Only (S/s)save or (P/p)push allowed as valid choices. Please try again.")
+        user_answer(allowed_values)
     else:
-        break
+        return True
+
+user_answer(allowed_values)
 
 if result == "s" or result == "save":
     tar_name = input("Enter result archive name (without .tar): ")
@@ -62,7 +66,7 @@ class Images:
         for i in self.source_content:
             self.target_content.append(i.replace(f'{source_repo}', f'{target_repo}'))
         print(self.target_content)
-        if click.confirm(f"Are you agree with the result?", default=False):
+        if click.confirm(f"Are you agree with the result?", default=True):
             for i in range(len(self.source_content)):
                 print(f"{self.source_content[i]} --> {self.target_content[i]}")
                 os.system(f"docker tag {self.source_content[i]} {self.target_content[i]}")
