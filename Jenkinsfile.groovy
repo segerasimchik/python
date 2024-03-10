@@ -1,9 +1,9 @@
 node {
+    checkout scm
     stage('Hello') {
-        ansiColor('xterm') {
-            echo "\u001B[31mHello \u001B[0mworld!"
-        }
-        
+        echo "Hello world!"
     }
 
 }
+
+
