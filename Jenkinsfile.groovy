@@ -1,3 +1,5 @@
+def changeSets = currentBuild.changeSets
+
 node {
 
     checkout scm
@@ -6,14 +8,13 @@ node {
     }
 
     stage('Check for Changes') {
-        def changeSets = currentBuild.changeSets
         if (changeSets.isEmpty()) {
             echo "No changes detected in the repository"
         } else {
             echo "Changes detected in the repository"
+            echo "applying tag to build..."
             echo "Hello World!"
         }
     }
 }
-
 
