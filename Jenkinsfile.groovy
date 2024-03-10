@@ -7,6 +7,7 @@ node {
 
     stage('Check for Changes') {
         def changeSets = currentBuild.changeSets
+        echo "${changeSets}"
         if (changeSets.isEmpty()) {
             echo "No changes detected in the repository"
         } else {
