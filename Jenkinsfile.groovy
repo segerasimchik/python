@@ -6,11 +6,12 @@ node {
     }
 
     stage('Check for Changes') {
-        def changes = checkout([$class: 'GitSCM']).poll().changeset
+        def changes = scm.changeset
         if (changes.isEmpty()) {
             echo "No changes detected in the repository"
         } else {
             echo "Changes detected in the repository"
+            echo "Hello World!"
         }
     }
 }
