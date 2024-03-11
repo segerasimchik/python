@@ -8,7 +8,7 @@ properties([
 node {
 
     stage('Dry run') {
-        if (sdry_run.toBoolean()) {
+        if (dry_run.toBoolean()) {
             currentBuild.result = 'NOT_BUILT'
         } else {
             echo "Continue build.."
