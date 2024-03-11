@@ -1,12 +1,13 @@
 properties([
     parameters([
-        string(defaultValue: 'fix_branch', description: 'Version  branch/commit/tag', name: 'branch'),
+        string(defaultValue: 'master', description: 'Version  branch/commit/tag', name: 'branch'),
         booleanParam(defaultValue: false, description: 'Execute job in dry-run mode, this mean that all deployments and notifications are skipped', name: 'dry_run'),
     ])
 ])
 
-def testForSleepFnc() {
+def testForSleepFnc(int time) {
     echo "Start"
+    sleep(time)
 }
 
 node {
@@ -16,11 +17,9 @@ node {
             currentBuild.result = 'NOT_BUILT'
         } else {
             echo "Continue build.."
-            sh "sleep 20"
         }
 
-        
-        testForSleepFnc()
+        testForSleepFnc(20)
     }
 
     stage('Second stage') {
