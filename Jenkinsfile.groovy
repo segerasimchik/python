@@ -5,6 +5,11 @@ properties([
     ])
 ])
 
+def testForSleepFnc(int time) {
+    echo "Start"
+    sleep(time)
+}
+
 node {
 
     stage('Dry run') {
@@ -13,10 +18,13 @@ node {
         } else {
             echo "Continue build.."
         }
+
+        testForSleepFnc(20)
     }
 
-    stage('Hello') {
+    stage('Second stage') {
         echo "Hello world!"
+        testForSleepFnc()
         def checkout = checkout([$class: "GitSCM",
             branches: [[name: branch]],
             extensions: [[$class: 'CleanBeforeCheckout']],
@@ -26,7 +34,7 @@ node {
 
     stage('Check for Changes') {
         def changeSets = currentBuild.changeSets
-        echo "${changeSets}"
+        echo "ChangeSets variable value: ${changeSets}"
         if (changeSets.isEmpty()) {
             echo "No changes detected in the repository"
         } else {
