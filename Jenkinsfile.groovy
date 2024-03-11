@@ -13,7 +13,14 @@ node {
         } else {
             echo "Continue build.."
         }
-        sleep 10
+        def testForSleepFnc() {
+            echo "Start"
+            sleep 20
+            echo "Stop"
+        }
+
+        testForSleepFnc()
+
     }
 
     stage('Second stage') {
