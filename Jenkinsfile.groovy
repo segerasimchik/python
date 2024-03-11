@@ -5,6 +5,12 @@ properties([
     ])
 ])
 
+def testForSleepFnc() {
+    echo "Start"
+    sleep 20
+    echo "Stop"
+}
+
 node {
 
     stage('Dry run') {
@@ -13,18 +19,13 @@ node {
         } else {
             echo "Continue build.."
         }
-        def testForSleepFnc() {
-            echo "Start"
-            sleep 20
-            echo "Stop"
-        }
 
         testForSleepFnc()
-
     }
 
     stage('Second stage') {
         echo "Hello world!"
+        testForSleepFnc()
         def checkout = checkout([$class: "GitSCM",
             branches: [[name: branch]],
             extensions: [[$class: 'CleanBeforeCheckout']],
