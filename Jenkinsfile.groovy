@@ -7,8 +7,6 @@ properties([
 
 def testForSleepFnc() {
     echo "Start"
-    sleep 20
-    echo "Stop"
 }
 
 node {
