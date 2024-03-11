@@ -1,7 +1,7 @@
 properties([
     parameters([
         string(defaultValue: 'master', description: 'Version  branch/commit/tag', name: 'branch'),
-        booleanParam(defaultValue: true, description: 'Execute job in dry-run mode, this mean that all deployments and notifications are skipped', name: 'dry_run'),
+        booleanParam(defaultValue: false, description: 'Execute job in dry-run mode, this mean that all deployments and notifications are skipped', name: 'dry_run'),
     ])
 ])
 
