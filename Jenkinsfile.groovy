@@ -13,6 +13,7 @@ node {
         } else {
             echo "Continue build.."
         }
+        sleep(30)
     }
 
     stage('Second stage') {
@@ -34,5 +35,6 @@ node {
             echo "Applying tag to build..."
             echo "Hello World!"
         }
+        sleep(10)
     }
 }
