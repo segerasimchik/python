@@ -9,7 +9,7 @@ node {
 
     stage('Dry run') {
         if (dry_run.toBoolean()) {
-            currentBuild.result == "SUCCESS"
+            currentBuild.result = 'SUCCESS'
         } else {
             echo "Continue build.."
         }
