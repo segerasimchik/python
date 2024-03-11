@@ -18,6 +18,7 @@ node {
             echo "Continue build.."
         }
 
+        sh "sleep 20"
         testForSleepFnc()
     }
 
