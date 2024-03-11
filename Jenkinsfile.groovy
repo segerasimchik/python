@@ -15,7 +15,7 @@ node {
         }
     }
 
-    stage('Hello') {
+    stage('Second stage') {
         echo "Hello world!"
         def checkout = checkout([$class: "GitSCM",
             branches: [[name: branch]],
@@ -26,7 +26,7 @@ node {
 
     stage('Check for Changes') {
         def changeSets = currentBuild.changeSets
-        echo "${changeSets}"
+        echo "ChangeSets variable value: ${changeSets}"
         if (changeSets.isEmpty()) {
             echo "No changes detected in the repository"
         } else {
