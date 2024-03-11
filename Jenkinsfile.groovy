@@ -20,7 +20,7 @@ node {
         def checkout = checkout([$class: "GitSCM",
             branches: [[name: branch]],
             extensions: [[$class: 'CleanBeforeCheckout']],
-            userRemoteConfigs: [[credentialsId: "jenkins_github_ssh", url: "git@github.com:Playtika/bingoblitz-versions.git"]]
+            userRemoteConfigs: [[url: " https://github.com/segerasimchik/python.git"]]
         ])
     }
 
