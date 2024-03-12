@@ -12,7 +12,8 @@ def testForSleepFnc(int time) {
 
 try {
     if (branch == "") {
-        throw new Exception("Branch parameter is empty")
+        //throw new Exception("Branch parameter is empty")
+        throw new hudson.AbortException("Parameter branch is mandatory!")
     }
 } catch (Exception e) {
     echo "Exception occured: " + e.toString()
