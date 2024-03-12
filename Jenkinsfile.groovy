@@ -19,14 +19,14 @@ try {
     error("Pipeline execution halted due to exception: ${e}")
 }
 
-def buildInfo = build job: 'get-info-job',  parameters: [
+def remoteRepoInfo = build job: 'get-info-job',  parameters: [
                     string(name: 'branch', value: branch),
                 ]
 
-def changeSets = buildInfo.rawBuild.changeSets
-echo "${changeSets}"
+def remoteChangeSets = remoteRepoInfo.rawBuild.changeSets
+echo "${remoteChangeSets}"
 
-if (changeSets.isEmpty()) {
+if (remoteChangeSets.isEmpty()) {
     echo "No changes detected in the repository. Skip tag creation."
 } else {
     echo "Changes detected in the repository"
