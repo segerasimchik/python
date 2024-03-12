@@ -10,6 +10,8 @@ def testForSleepFnc(int time) {
     sleep(time)
 }
 
+assert branch != ""
+
 node {
 
     stage('Dry run') {
@@ -36,10 +38,10 @@ node {
         def changeSets = currentBuild.changeSets
         echo "ChangeSets variable value: ${changeSets}"
         if (changeSets.isEmpty()) {
-            echo "No changes detected in the repository"
+            echo "No changes detected in the repository. Skip tag creation."
         } else {
             echo "Changes detected in the repository"
-            echo "Applying tag to build..."
+            echo "Applying tag to repo..."
             echo "Hello World!"
         }
     }
