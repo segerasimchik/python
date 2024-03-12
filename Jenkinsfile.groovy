@@ -19,6 +19,9 @@ try {
     error("Pipeline execution halted due to exception: ${e}")
 }
 
+
+node {
+
 def remoteRepoInfo = build job: 'get-info-job',  parameters: [
                     string(name: 'branch', value: branch),
                 ]
@@ -32,9 +35,6 @@ if (remoteChangeSets.isEmpty()) {
     echo "Changes detected in the repository"
     echo "Applying tag to repo..."
 }
-
-
-node {
 
     stage('Dry run') {
         if (dry_run.toBoolean()) {
