@@ -31,7 +31,7 @@ node {
 
     stage('Scm') {
         echo "Hello world!"
-        testForSleepFnc(5)
+        //testForSleepFnc(5)
         def checkout = checkout([$class: "GitSCM",
             branches: [[name: branch]],
             extensions: [[$class: 'CleanBeforeCheckout']],
