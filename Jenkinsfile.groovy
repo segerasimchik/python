@@ -49,6 +49,15 @@ node {
         echo "${changeSets}"
     }
 
+    stage('Some debug info') {
+        def buildInfo = build job: 'get-info-job',  parameters: [
+                            string(name: 'branch', value: branch),
+                        ]
+        
+        def changeSets = buildInfo.rawBuild
+        echo "${changeSets}"
+    }
+
     // stage('Check for Changes') {
     //     def changeSets = currentBuild.changeSets
     //     echo "ChangeSets variable value: ${changeSets}"
