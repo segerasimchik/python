@@ -47,26 +47,12 @@ node {
         
         def changeSets = buildInfo.rawBuild.changeSets
         echo "${changeSets}"
-    }
 
-    stage('Some debug info') {
-        def buildInfo = build job: 'get-info-job',  parameters: [
-                            string(name: 'branch', value: branch),
-                        ]
-        
-        def changeSets = buildInfo.rawBuild
-        echo "${changeSets}"
+        if (changeSets.isEmpty()) {
+            echo "No changes detected in the repository. Skip tag creation."
+        } else {
+            echo "Changes detected in the repository"
+            echo "Applying tag to repo..."
+        }
     }
-
-    // stage('Check for Changes') {
-    //     def changeSets = currentBuild.changeSets
-    //     echo "ChangeSets variable value: ${changeSets}"
-    //     if (changeSets.isEmpty()) {
-    //         echo "No changes detected in the repository. Skip tag creation."
-    //     } else {
-    //         echo "Changes detected in the repository"
-    //         echo "Applying tag to repo..."
-    //         echo "Hello World!"
-    //     }
-    // }
 }
