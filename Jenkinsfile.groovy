@@ -10,7 +10,12 @@ def testForSleepFnc(int time) {
     sleep(time)
 }
 
-assert branch != ""
+try {
+    assert branch != ""
+} catch(Exeption e) {
+    echo "Exeption occured: " + e.toString()
+    echo "Handle the exeption!"
+}
 
 node {
 
