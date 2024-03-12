@@ -22,20 +22,6 @@ try {
 
 node {
 
-def remoteRepoInfo = build job: 'get-info-job',  parameters: [
-                    string(name: 'branch', value: branch),
-                ]
-
-def remoteChangeSets = remoteRepoInfo.rawBuild.changeSets
-echo "${remoteChangeSets}"
-
-if (remoteChangeSets.isEmpty()) {
-    echo "No changes detected in the repository. Skip tag creation."
-} else {
-    echo "Changes detected in the repository"
-    echo "Applying tag to repo..."
-}
-
     stage('Dry run') {
         if (dry_run.toBoolean()) {
             currentBuild.result = 'NOT_BUILT'
@@ -52,6 +38,22 @@ if (remoteChangeSets.isEmpty()) {
             extensions: [[$class: 'CleanBeforeCheckout']],
             userRemoteConfigs: [[url: " https://github.com/segerasimchik/python.git"]]
         ])
+    }
+
+    stage('Get info from remote job') {
+        def remoteRepoInfo = build job: 'get-info-job',  parameters: [
+                    string(name: 'branch', value: branch),
+                ]
+
+        def remoteChangeSets = remoteRepoInfo.rawBuild.changeSets
+        echo "${remoteChangeSets}"
+
+        if (remoteChangeSets.isEmpty()) {
+            echo "No changes detected in the repository. Skip tag creation."
+        } else {
+            echo "Changes detected in the repository"
+            echo "Applying tag to repo..."
+        }
     }
 
     stage('Remote job info') {
