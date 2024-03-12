@@ -41,9 +41,9 @@ node {
 
     stage('Remote job info') {
 
-        build job: 'get-info-job',  parameters: [
-            string(name: 'branch', value: branch),
-        ]
+        def job_info = build job: 'get-info-job',  parameters: [
+                       string(name: 'branch', value: branch),
+                   ]
     }
 
     // stage('Check for Changes') {
