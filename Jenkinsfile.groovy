@@ -27,11 +27,9 @@ node {
         } else {
             echo "Continue build.."
         }
-
-        testForSleepFnc(20)
     }
 
-    stage('Second stage') {
+    stage('Scm') {
         echo "Hello world!"
         testForSleepFnc(5)
         def checkout = checkout([$class: "GitSCM",
@@ -41,15 +39,22 @@ node {
         ])
     }
 
-    stage('Check for Changes') {
-        def changeSets = currentBuild.changeSets
-        echo "ChangeSets variable value: ${changeSets}"
-        if (changeSets.isEmpty()) {
-            echo "No changes detected in the repository. Skip tag creation."
-        } else {
-            echo "Changes detected in the repository"
-            echo "Applying tag to repo..."
-            echo "Hello World!"
-        }
+    stage('Remote job info') {
+
+        build job: 'get-info-job',  parameters: [
+            string(name: 'branch', value: branch),
+        ]
     }
+
+    // stage('Check for Changes') {
+    //     def changeSets = currentBuild.changeSets
+    //     echo "ChangeSets variable value: ${changeSets}"
+    //     if (changeSets.isEmpty()) {
+    //         echo "No changes detected in the repository. Skip tag creation."
+    //     } else {
+    //         echo "Changes detected in the repository"
+    //         echo "Applying tag to repo..."
+    //         echo "Hello World!"
+    //     }
+    // }
 }
