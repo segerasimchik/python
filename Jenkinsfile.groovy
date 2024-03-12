@@ -19,6 +19,21 @@ try {
     error("Pipeline execution halted due to exception: ${e}")
 }
 
+def buildInfo = build job: 'get-info-job',  parameters: [
+                    string(name: 'branch', value: branch),
+                ]
+
+def changeSets = buildInfo.rawBuild.changeSets
+echo "${changeSets}"
+
+if (changeSets.isEmpty()) {
+    echo "No changes detected in the repository. Skip tag creation."
+} else {
+    echo "Changes detected in the repository"
+    echo "Applying tag to repo..."
+}
+
+
 node {
 
     stage('Dry run') {
@@ -40,19 +55,6 @@ node {
     }
 
     stage('Remote job info') {
-
-        def buildInfo = build job: 'get-info-job',  parameters: [
-                            string(name: 'branch', value: branch),
-                        ]
-        
-        def changeSets = buildInfo.rawBuild.changeSets
-        echo "${changeSets}"
-
-        if (changeSets.isEmpty()) {
-            echo "No changes detected in the repository. Skip tag creation."
-        } else {
-            echo "Changes detected in the repository"
-            echo "Applying tag to repo..."
-        }
+        echo "Success!"
     }
 }
