@@ -12,12 +12,11 @@ def testForSleepFnc(int time) {
 
 try {
     if (branch == "") {
-        //throw new Exception("Branch parameter is empty")
-        throw new hudson.AbortException("Parameter branch is mandatory!")
+        throw new Exception("Branch parameter is mandatory!")
     }
 } catch (Exception e) {
     echo "Exception occured: " + e.toString()
-    echo "Handle the Exception!"
+    error("Pipeline execution halted due to exception: ${e}")
 }
 
 node {
