@@ -11,7 +11,9 @@ def testForSleepFnc(int time) {
 }
 
 try {
-    assert branch != ""
+    if (branch == "") {
+        throw new Exception("Branch parameter is empty")
+    }
 } catch (Exception e) {
     echo "Exception occured: " + e.toString()
     echo "Handle the Exception!"
