@@ -12,9 +12,9 @@ def testForSleepFnc(int time) {
 
 try {
     assert branch != ""
-} catch(Exeption e) {
-    echo "Exeption occured: " + e.toString()
-    echo "Handle the exeption!"
+} catch (Exception e) {
+    echo "Exception occured: " + e.toString()
+    echo "Handle the Exception!"
 }
 
 node {
