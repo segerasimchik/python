@@ -19,6 +19,20 @@ try {
     error("Pipeline execution halted due to exception: ${e}")
 }
 
+stage('Get info from remote job') {
+    def remoteRepoInfo = build job: 'get-info-job',  parameters: [
+                string(name: 'branch', value: branch),
+            ]
+    
+    def remoteChangeSets = remoteRepoInfo.rawBuild.changeSets
+    echo "${remoteChangeSets}"
+    if (remoteChangeSets.isEmpty()) {
+        echo "No changes detected in the repository. Skip tag creation."
+    } else {
+        echo "Changes detected in the repository"
+        echo "Applying tag to repo..."
+    }
+}
 
 node {
 
@@ -40,21 +54,21 @@ node {
         ])
     }
 
-    stage('Get info from remote job') {
-        def remoteRepoInfo = build job: 'get-info-job',  parameters: [
-                    string(name: 'branch', value: branch),
-                ]
+    // stage('Get info from remote job') {
+    //     def remoteRepoInfo = build job: 'get-info-job',  parameters: [
+    //                 string(name: 'branch', value: branch),
+    //             ]
 
-        def remoteChangeSets = remoteRepoInfo.rawBuild.changeSets
-        echo "${remoteChangeSets}"
+    //     def remoteChangeSets = remoteRepoInfo.rawBuild.changeSets
+    //     echo "${remoteChangeSets}"
 
-        if (remoteChangeSets.isEmpty()) {
-            echo "No changes detected in the repository. Skip tag creation."
-        } else {
-            echo "Changes detected in the repository"
-            echo "Applying tag to repo..."
-        }
-    }
+    //     if (remoteChangeSets.isEmpty()) {
+    //         echo "No changes detected in the repository. Skip tag creation."
+    //     } else {
+    //         echo "Changes detected in the repository"
+    //         echo "Applying tag to repo..."
+    //     }
+    // }
 
     stage('Remote job info') {
         echo "Success!"
