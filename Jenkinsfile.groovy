@@ -1,6 +1,7 @@
 properties([
     parameters([
         string(defaultValue: 'master', description: 'Version  branch/commit/tag', name: 'branch'),
+        string(defaultValue: '', description: 'Specify job name for launch', name: 'job-name'),
         booleanParam(defaultValue: false, description: 'Execute job in dry-run mode, this mean that all deployments and notifications are skipped', name: 'dry_run'),
     ])
 ])
@@ -19,8 +20,17 @@ try {
     error("Pipeline execution halted due to exception: ${e}")
 }
 
+try {
+    if (job-name == "") {
+        throw new Exception("Job-name parameter is mandatory!")
+    }
+} catch (Exception e) {
+    echo "Exception occured: " + e.toString()
+    error("Pipeline execution halted due to exception: ${e}")
+}
+
 stage('Get info from remote job') {
-    def remoteRepoInfo = build job: 'get-info-job',  parameters: [
+    def remoteRepoInfo = build job: job-name,  parameters: [
                 string(name: 'branch', value: branch),
             ]
     
