@@ -1,7 +1,7 @@
 properties([
     parameters([
         string(defaultValue: 'master', description: 'Version  branch/commit/tag', name: 'branch'),
-        string(defaultValue: '', description: 'Specify job name for launch', name: 'job-name'),
+        string(defaultValue: '', description: 'Specify job name for launch', name: 'job_name'),
         booleanParam(defaultValue: false, description: 'Execute job in dry-run mode, this mean that all deployments and notifications are skipped', name: 'dry_run'),
     ])
 ])
@@ -21,7 +21,7 @@ try {
 }
 
 try {
-    if (job-name == "") {
+    if (job_name == "") {
         throw new Exception("Job-name parameter is mandatory!")
     }
 } catch (Exception e) {
@@ -30,7 +30,7 @@ try {
 }
 
 stage('Get info from remote job') {
-    def remoteRepoInfo = build(job: job-name,  parameters: [
+    def remoteRepoInfo = build(job: 'test-job',  parameters: [
                 string(name: 'branch', value: branch),
             ])
     
