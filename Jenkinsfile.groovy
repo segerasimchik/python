@@ -30,9 +30,9 @@ try {
 }
 
 stage('Get info from remote job') {
-    def remoteRepoInfo = build job: job-name,  parameters: [
+    def remoteRepoInfo = build(job: job-name,  parameters: [
                 string(name: 'branch', value: branch),
-            ]
+            ])
     
     def remoteChangeSets = remoteRepoInfo.rawBuild.changeSets
     echo "${remoteChangeSets}"
