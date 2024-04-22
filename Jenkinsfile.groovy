@@ -30,7 +30,7 @@ try {
 }
 
 stage('Get info from remote job') {
-    def remoteRepoInfo = build(job: 'test-job',  parameters: [
+    def remoteRepoInfo = build(job: branch,  parameters: [
                 string(name: 'branch', value: branch),
             ])
     
